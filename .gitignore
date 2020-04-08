@@ -5,7 +5,6 @@
 [Bb]uilds/
 Assets/AssetStoreTools*
 Assets/Sounds*
-Assets/Plugins/Oculus*
 
 # Visual Studio cache directory
 .vs/
