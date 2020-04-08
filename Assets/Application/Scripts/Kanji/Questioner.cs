@@ -1,0 +1,99 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using UniRx;
+using UnityEngine;
+using Random = UnityEngine.Random;
+
+public class Questioner : MonoBehaviour
+{
+    [SerializeField] private AnswerGenerator answerGenerator;
+    [SerializeField] private GameObject chicken;
+    [SerializeField] private GameObject goal;
+
+    public ReactiveDictionary<int, Result> History = new ReactiveDictionary<int, Result>();
+
+    private Vector3 start = new Vector3(6.5f, 0f, -7f);
+
+    private static IList<Quiz> quizzes;
+
+    private IList<GameObject> chickens = new List<GameObject>();
+    private IDisposable generator;
+
+    void Start()
+    {
+        quizzes = QuizzesLoader.Quizzes;
+    }
+
+    public void Reset()
+    {
+        foreach (var c in chickens)
+        {
+            Destroy(c);
+        }
+
+        chickens.Clear();
+    }
+
+    public void StartGenerate()
+    {
+        Generate();
+        generator = Observable.Interval(TimeSpan.FromSeconds(10)).Subscribe(_ => Generate());
+    }
+
+    public void StopGenerate()
+    {
+        foreach (var c in chickens)
+        {
+            c.GetComponent<QuestionChicken>().Idle();
+        }
+
+        generator?.Dispose();
+    }
+
+    public void Check(AnswerDonut answerDonut)
+    {
+        var result = new Result
+        {
+            Questions = chickens.Select(c => c.GetComponent<QuestionChicken>().Question.text).ToList(),
+            Answer = answerDonut,
+            IsCorrect = chickens.Any(c => c.GetComponent<QuestionChicken>().Answer.text == answerDonut.Yomi)
+        };
+
+        var message = result.IsCorrect ? "正解！" : "ブーーー";
+        Debug.Log(message);
+
+        if (result.IsCorrect)
+        {
+            var target = chickens.First(c => c.GetComponent<QuestionChicken>().Answer.text == answerDonut.Yomi);
+            chickens.Remove(target);
+            Destroy(target);
+            
+            answerGenerator.Reset();
+        }
+
+        History.Add(History.Values.Count, result);
+    }
+
+    private void Generate()
+    {
+        var quiz = GetQuiz();
+
+        var bird = Instantiate(chicken, start, Quaternion.identity);
+        var qChicken = bird.GetComponent<QuestionChicken>();
+        qChicken.Target = goal.transform;
+        qChicken.Question.text = quiz.Kanji;
+        qChicken.Answer.text = quiz.Yomi;
+
+        chickens.Add(bird);
+
+        // todo: 複数問題が出たときに答えがリフレッシュされて、最後の問題しか回答できない問題を解決する
+        answerGenerator.SetAnswerDonuts(new List<Quiz> {quiz});
+    }
+
+    private Quiz GetQuiz()
+    {
+        var i = Random.Range(0, quizzes.Count - 1);
+        return quizzes[i];
+    }
+}
