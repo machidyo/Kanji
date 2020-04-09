@@ -48,8 +48,11 @@ public class KanjiHand : MonoBehaviour
             var answer = target.gameObject.GetComponent<AnswerDonut>();
             if (answer != null)
             {
-                questioner.Check(answer);
+                // todo: コメントを戻す
+                // questioner.Check(answer);
             }
+            
+            answer.Bounce();
         }
 
         if (target.name.ToLower().StartsWith("ui"))
