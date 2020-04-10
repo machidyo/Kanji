@@ -2183,7 +2183,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5018928229566991965, guid: d8f9ceef1e5ce4740bb95a7a4ffdeafe, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d8f9ceef1e5ce4740bb95a7a4ffdeafe, type: 3}
 --- !u!1001 &5991985737704209014
 PrefabInstance:
@@ -2320,11 +2321,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: answer_donut_black
-      objectReference: {fileID: 0}
-    - target: {fileID: 8050264412121849884, guid: 1ea8449c0d03b499aa4dff6c7eb77644,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ea8449c0d03b499aa4dff6c7eb77644, type: 3}

@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 8050264412121627708}
   - component: {fileID: 8050264412118727708}
   - component: {fileID: 8050264412119858908}
-  - component: {fileID: 8050264412115553980}
+  - component: {fileID: 1118004798}
   - component: {fileID: 8050264413199886634}
   - component: {fileID: 8050264412448475928}
   m_Layer: 0
@@ -204,7 +204,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8050264412121849884}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5, y: 0.5, z: -4.4}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
@@ -259,8 +259,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &8050264412115553980
-MeshCollider:
+--- !u!65 &1118004798
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -269,10 +269,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: dc74e53f7f0b5495b9e760dd4803accb, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 0.25, y: 0.1, z: 0.25}
+  m_Center: {x: 0, y: 0.05, z: 0}
 --- !u!54 &8050264413199886634
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -286,8 +285,8 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 2
-  m_Constraints: 0
+  m_Interpolate: 1
+  m_Constraints: 122
   m_CollisionDetection: 3
 --- !u!114 &8050264412448475928
 MonoBehaviour:
