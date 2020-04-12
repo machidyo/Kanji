@@ -1,4 +1,7 @@
-﻿using UniRx;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 
@@ -12,6 +15,7 @@ public class KanjiHand : MonoBehaviour
 
     [SerializeField] private Material on;
     [SerializeField] private Material off;
+    [SerializeField] private GameObject cube;
 
     // memo
     // ffmpeg -i Moving.mp4 -r 10 -vf scale=320:-1 Moving.gif
@@ -27,16 +31,45 @@ public class KanjiHand : MonoBehaviour
             {
                 handRenderer.materials = new[] {on};
                 Check(x.gameObject);
-            });
+            }).AddTo(this);
         
         this.OnTriggerExitAsObservable()
-            .Subscribe(x => handRenderer.materials = new[] {off});
+            .Subscribe(x => handRenderer.materials = new[] {off})
+            .AddTo(this);
 
         // マウスクリックの設定は片手だけ
         if (isRightHand)
         {
             SetMouseForDebug();
         }
+    }
+
+    void Update()
+    {
+        // なぜかずっと 0 になっているみたいなので、そこの修正から
+        cube.transform.localScale = GetMovement() * 0.1f;
+    }
+
+    private static readonly int MAX =60;
+    private List<Vector3> cashPositions = new List<Vector3>(MAX);
+    private int index = 0;
+    void StorePosition()
+    {
+        cashPositions[index] = transform.position;
+        index++;
+        if (index >= MAX)
+        {
+            index = 0;
+        }
+    }
+
+    Vector3 GetMovement()
+    {
+        if (cashPositions.Count < MAX) return Vector3.zero; // データ不足のため 0.0f を返す
+
+        var previous = index - 30;
+        if (previous < 0) previous += MAX; // データはぐるぐる回りながら代入しているので、前に戻す
+        return (cashPositions[index] - cashPositions[previous]);
     }
 
     private void Check(GameObject target)
@@ -52,7 +85,7 @@ public class KanjiHand : MonoBehaviour
                 // questioner.Check(answer);
             }
             
-            answer.Bounce();
+            answer.Bounce(GetMovement());
         }
 
         if (target.name.ToLower().StartsWith("ui"))
