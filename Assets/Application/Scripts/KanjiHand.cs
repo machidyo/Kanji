@@ -18,7 +18,7 @@ public class KanjiHand : MonoBehaviour
     [SerializeField] private GameObject cube;
 
     // memo
-    // ffmpeg -i Moving.mp4 -r 10 -vf scale=320:-1 Moving.gif
+    // 
     // music
     //   2   retro music pack
     //   2   sounds effect pack
@@ -82,7 +82,7 @@ public class KanjiHand : MonoBehaviour
             if (answer != null)
             {
                 // todo: コメントを戻す
-                // questioner.Check(answer);
+                questioner.Check(answer);
             }
             
             answer.Bounce(GetMovement());

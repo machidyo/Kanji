@@ -121,6 +121,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &41746399 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4066815330136409524, guid: 178ad2569ac194f349fd6b3b1b1ad04d,
+    type: 3}
+  m_PrefabInstance: {fileID: 4066815330267189703}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &132026399
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,6 +593,12 @@ Transform:
   m_Father: {fileID: 798665011}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!1 &786638793 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4066815329469621243, guid: 178ad2569ac194f349fd6b3b1b1ad04d,
+    type: 3}
+  m_PrefabInstance: {fileID: 4066815330267189703}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &798665010
 GameObject:
   m_ObjectHideFlags: 0
@@ -1951,6 +1963,11 @@ PrefabInstance:
       propertyPath: kanjiMananger
       value: 
       objectReference: {fileID: 994702539}
+    - target: {fileID: 5452587919229890040, guid: 178ad2569ac194f349fd6b3b1b1ad04d,
+        type: 3}
+      propertyPath: cube
+      value: 
+      objectReference: {fileID: 41746399}
     - target: {fileID: 9059134053931941179, guid: 178ad2569ac194f349fd6b3b1b1ad04d,
         type: 3}
       propertyPath: questioner
@@ -1961,6 +1978,11 @@ PrefabInstance:
       propertyPath: kanjiMananger
       value: 
       objectReference: {fileID: 994702539}
+    - target: {fileID: 9059134053931941179, guid: 178ad2569ac194f349fd6b3b1b1ad04d,
+        type: 3}
+      propertyPath: cube
+      value: 
+      objectReference: {fileID: 786638793}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 178ad2569ac194f349fd6b3b1b1ad04d, type: 3}
 --- !u!1001 &4196134242110294635
