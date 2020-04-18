@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UniRx;
@@ -42,20 +43,36 @@ public class KanjiHand : MonoBehaviour
         {
             SetMouseForDebug();
         }
+
+        // 初期化、後で実装考える
+        for (var i = 0; i < movements.Length; ++i)
+        {
+            movements[i] = new Movement
+            {
+                Time = 0f, 
+                Position = transform.position
+            };
+        }
     }
 
     void Update()
     {
+        StorePosition();
+        
         // なぜかずっと 0 になっているみたいなので、そこの修正から
-        cube.transform.localScale = GetMovement() * 0.1f;
+        cube.transform.localScale = Vector3.one * (GetSpeed() * 0.1f);
     }
 
     private static readonly int MAX =60;
-    private List<Vector3> cashPositions = new List<Vector3>(MAX);
+    private Movement[] movements = new Movement[MAX];
     private int index = 0;
     void StorePosition()
     {
-        cashPositions[index] = transform.position;
+        movements[index] = new Movement()
+        {
+            Time = Time.deltaTime,
+            Position = transform.position
+        };
         index++;
         if (index >= MAX)
         {
@@ -63,13 +80,14 @@ public class KanjiHand : MonoBehaviour
         }
     }
 
-    Vector3 GetMovement()
+    float GetSpeed()
     {
-        if (cashPositions.Count < MAX) return Vector3.zero; // データ不足のため 0.0f を返す
-
-        var previous = index - 30;
+        var previous = index - 1;
         if (previous < 0) previous += MAX; // データはぐるぐる回りながら代入しているので、前に戻す
-        return (cashPositions[index] - cashPositions[previous]);
+
+        var distance = Vector3.Distance(movements[index].Position, movements[previous].Position);
+        var deltaTime = movements.Sum(m => m.Time);
+        return  distance / deltaTime;
     }
 
     private void Check(GameObject target)
@@ -82,10 +100,10 @@ public class KanjiHand : MonoBehaviour
             if (answer != null)
             {
                 // todo: コメントを戻す
-                questioner.Check(answer);
+                // questioner.Check(answer);
             }
             
-            answer.Bounce(GetMovement());
+            answer.Bounce(GetSpeed());
         }
 
         if (target.name.ToLower().StartsWith("ui"))
@@ -119,4 +137,10 @@ public class KanjiHand : MonoBehaviour
             ? hit.collider.gameObject 
             : null;
     }
+}
+
+public class Movement
+{
+    public float Time;
+    public Vector3 Position;
 }

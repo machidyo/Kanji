@@ -29,14 +29,14 @@ public class AnswerDonut : MonoBehaviour
         answer.text = q.Yomi;
     }
 
-    public void Bounce(Vector3 movment)
+    public void Bounce(float movment)
     {
         if(isBouncing) return;
         isBouncing = true;
         GetComponent<BoxCollider>().enabled = false;
 
         DOTween.Sequence()
-            .Append(transform.DOMove(originalPos - (movment * 0.1f), bouncingDuration))
+            .Append(transform.DOMove(originalPos  * movment, bouncingDuration))
             .Join(transform.DOScale(maxScale, bouncingDuration))
             .Append(transform.DOMove(originalPos, bouncingDuration))
             .Join(transform.DOScale(originalScale * 0.8f, bouncingDuration))
