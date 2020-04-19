@@ -9,7 +9,7 @@ public class AnswerDonut : MonoBehaviour
     private Quiz quiz;
     private Text answer;
 
-    private float bouncingDuration = 0.1f;
+    private float bouncingDuration = 1.0f;
     private bool isBouncing = false;
     private Vector3 originalPos;
     private Vector3 originalScale;
@@ -29,18 +29,22 @@ public class AnswerDonut : MonoBehaviour
         answer.text = q.Yomi;
     }
 
-    public void Bounce(float movment)
+    public void Bounce(Vector3 target, float speed)
     {
         if(isBouncing) return;
         isBouncing = true;
-        GetComponent<BoxCollider>().enabled = false;
+        // GetComponent<BoxCollider>().enabled = false;
+        GetComponent<SphereCollider>().enabled = false;
 
+        if (Mathf.Abs(speed) < 0.01f) speed = 0.01f; // speed が 0 だと duration のところで 0 割り算になるのでとりあえず防ぐ
+        var duration = bouncingDuration / (speed * 10);
+        Debug.Log("duration = " + duration);
         DOTween.Sequence()
-            .Append(transform.DOMove(originalPos  * movment, bouncingDuration))
-            .Join(transform.DOScale(maxScale, bouncingDuration))
-            .Append(transform.DOMove(originalPos, bouncingDuration))
-            .Join(transform.DOScale(originalScale * 0.8f, bouncingDuration))
-            .Append(transform.DOScale(originalScale, bouncingDuration * 0.2f))
+            .Append(transform.DOMove(originalPos + target, duration))
+            .Join(transform.DOScale(maxScale, duration))
+            .Append(transform.DOMove(originalPos, duration))
+            .Join(transform.DOScale(originalScale * 0.8f, duration))
+            .Append(transform.DOScale(originalScale, duration * 0.2f))
             .AppendCallback(OnFinishedBounding)
             .Play();
     }
@@ -57,7 +61,8 @@ public class AnswerDonut : MonoBehaviour
             transform.DOScale(originalScale, bouncingDuration);
         }
         
-        GetComponent<BoxCollider>().enabled = true;
+        // GetComponent<BoxCollider>().enabled = true;
+        GetComponent<SphereCollider>().enabled = true;
         isBouncing = false;
     }
 }

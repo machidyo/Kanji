@@ -11,7 +11,7 @@ public class KanjiHand : MonoBehaviour
     [SerializeField] private KanjiMananger kanjiMananger;
     
     [SerializeField] private Questioner questioner;
-    [SerializeField] private SkinnedMeshRenderer handRenderer;
+    //[SerializeField] private SkinnedMeshRenderer handRenderer;
     [SerializeField] private bool isRightHand;
 
     [SerializeField] private Material on;
@@ -30,13 +30,13 @@ public class KanjiHand : MonoBehaviour
         this.OnTriggerEnterAsObservable()
             .Subscribe(x =>
             {
-                handRenderer.materials = new[] {on};
+                // handRenderer.materials = new[] {on};
                 Check(x.gameObject);
             }).AddTo(this);
         
-        this.OnTriggerExitAsObservable()
-            .Subscribe(x => handRenderer.materials = new[] {off})
-            .AddTo(this);
+        // this.OnTriggerExitAsObservable()
+        //     .Subscribe(x => handRenderer.materials = new[] {off})
+        //     .AddTo(this);
 
         // マウスクリックの設定は片手だけ
         if (isRightHand)
@@ -59,14 +59,14 @@ public class KanjiHand : MonoBehaviour
     {
         StorePosition();
         
-        // なぜかずっと 0 になっているみたいなので、そこの修正から
-        cube.transform.localScale = Vector3.one * (GetSpeed() * 0.1f);
+        // for debug
+        cube.transform.localScale = Vector3.one * (GetVirtualSpeed() * 0.1f);
     }
 
     private static readonly int MAX =60;
     private Movement[] movements = new Movement[MAX];
     private int index = 0;
-    void StorePosition()
+    private void StorePosition()
     {
         movements[index] = new Movement()
         {
@@ -80,14 +80,22 @@ public class KanjiHand : MonoBehaviour
         }
     }
 
-    float GetSpeed()
+    private float GetVirtualSpeed()
     {
         var previous = index - 1;
         if (previous < 0) previous += MAX; // データはぐるぐる回りながら代入しているので、前に戻す
 
-        var distance = Vector3.Distance(movements[index].Position, movements[previous].Position);
+        var distance = (movements[index].Position - movements[previous].Position).magnitude;
         var deltaTime = movements.Sum(m => m.Time);
         return  distance / deltaTime;
+    }
+
+    private Vector3 GetTargetPosition()
+    {
+        var previous = index - 20;
+        if (previous < 0) previous += MAX; // データはぐるぐる回りながら代入しているので、前に戻す
+        
+        return (movements[index].Position - movements[previous].Position);
     }
 
     private void Check(GameObject target)
@@ -103,7 +111,7 @@ public class KanjiHand : MonoBehaviour
                 // questioner.Check(answer);
             }
             
-            answer.Bounce(GetSpeed());
+            answer.Bounce(GetTargetPosition(), GetVirtualSpeed());
         }
 
         if (target.name.ToLower().StartsWith("ui"))
@@ -124,6 +132,7 @@ public class KanjiHand : MonoBehaviour
             {
                 Debug.Log("clicked.");
                 var target = TryGetObject();
+                if(target == null) Debug.Log("target is null.");
                 if (target != null)
                 {
                     Check(target);
