@@ -9,8 +9,9 @@ using UnityEngine;
 public class KanjiHand : MonoBehaviour
 {
     [SerializeField] private KanjiMananger kanjiMananger;
-    
+
     [SerializeField] private Questioner questioner;
+
     //[SerializeField] private SkinnedMeshRenderer handRenderer;
     [SerializeField] private bool isRightHand;
 
@@ -24,7 +25,7 @@ public class KanjiHand : MonoBehaviour
     //   2   retro music pack
     //   2   sounds effect pack
     //   2.5 Whimsical Adventure Music Pack 1
-    
+
     void Start()
     {
         this.OnTriggerEnterAsObservable()
@@ -33,7 +34,7 @@ public class KanjiHand : MonoBehaviour
                 // handRenderer.materials = new[] {on};
                 Check(x.gameObject);
             }).AddTo(this);
-        
+
         // this.OnTriggerExitAsObservable()
         //     .Subscribe(x => handRenderer.materials = new[] {off})
         //     .AddTo(this);
@@ -49,7 +50,7 @@ public class KanjiHand : MonoBehaviour
         {
             movements[i] = new Movement
             {
-                Time = 0f, 
+                Time = 0f,
                 Position = transform.position
             };
         }
@@ -58,14 +59,15 @@ public class KanjiHand : MonoBehaviour
     void Update()
     {
         StorePosition();
-        
+
         // for debug
-        cube.transform.localScale = Vector3.one * (GetVirtualSpeed() * 0.1f);
+        cube.transform.localScale = new Vector3(0.0f, GetVirtualSpeed() * 0.05f, 0.0f);
     }
 
-    private static readonly int MAX =60;
+    private static readonly int MAX = 10;
     private Movement[] movements = new Movement[MAX];
     private int index = 0;
+
     private void StorePosition()
     {
         movements[index] = new Movement()
@@ -82,20 +84,29 @@ public class KanjiHand : MonoBehaviour
 
     private float GetVirtualSpeed()
     {
-        var previous = index - 1;
-        if (previous < 0) previous += MAX; // データはぐるぐる回りながら代入しているので、前に戻す
+        if (movements.Length < MAX) return 0.0f; // no data is 0 speed.
+        
+        var distance = 0.0f;
+        for (var i = 0; i < MAX - 1; i++)
+        {
+            var now = index - i;
+            var previous = index - i - 1;
+            // データはぐるぐる回りながら代入しているので、前に戻す
+            if (now < 0) now += MAX;
+            if (previous < 0) previous += MAX;
+            distance += (movements[now].Position - movements[previous].Position).magnitude;
+        }
 
-        var distance = (movements[index].Position - movements[previous].Position).magnitude;
         var deltaTime = movements.Sum(m => m.Time);
-        return  distance / deltaTime;
+        return distance / deltaTime;
     }
 
     private Vector3 GetTargetPosition()
     {
-        var previous = index - 20;
+        var previous = index - (MAX - 1);
         if (previous < 0) previous += MAX; // データはぐるぐる回りながら代入しているので、前に戻す
-        
-        return (movements[index].Position - movements[previous].Position);
+
+        return (movements[previous].Position - movements[index].Position) * 10.0f;
     }
 
     private void Check(GameObject target)
@@ -110,7 +121,7 @@ public class KanjiHand : MonoBehaviour
                 // todo: コメントを戻す
                 // questioner.Check(answer);
             }
-            
+
             answer.Bounce(GetTargetPosition(), GetVirtualSpeed());
         }
 
@@ -122,7 +133,7 @@ public class KanjiHand : MonoBehaviour
             }
         }
     }
-    
+
     private void SetMouseForDebug()
     {
         Observable
@@ -132,18 +143,19 @@ public class KanjiHand : MonoBehaviour
             {
                 Debug.Log("clicked.");
                 var target = TryGetObject();
-                if(target == null) Debug.Log("target is null.");
+                if (target == null) Debug.Log("target is null.");
                 if (target != null)
                 {
                     Check(target);
                 }
             });
     }
+
     private GameObject TryGetObject()
     {
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        return Physics.Raycast(ray.origin, ray.direction, out var hit, Mathf.Infinity) 
-            ? hit.collider.gameObject 
+        return Physics.Raycast(ray.origin, ray.direction, out var hit, Mathf.Infinity)
+            ? hit.collider.gameObject
             : null;
     }
 }
