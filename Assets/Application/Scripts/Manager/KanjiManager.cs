@@ -6,7 +6,7 @@ using UniRx;
 using UniRx.Triggers;
 using UniRx.Async;
 
-public class KanjiMananger : MonoBehaviour
+public class KanjiManager : MonoBehaviour
 {
     public enum GameStatus
     {
@@ -20,7 +20,7 @@ public class KanjiMananger : MonoBehaviour
     [SerializeField] private AnswerGenerator answerGenerator;
 
     [SerializeField] private Text HeadUi;
-    
+
     [SerializeField] private Text StatusText;
     [SerializeField] private Text TimerText;
     [SerializeField] private Text ScoreText;
@@ -142,7 +142,7 @@ public class KanjiMananger : MonoBehaviour
         Status.Value = GameStatus.Finished;
 
         await UniTask.Delay(5000);
-        
+
         ChangeStatus();
     }
 
@@ -152,12 +152,12 @@ public class KanjiMananger : MonoBehaviour
         Score.Value = 0;
         ClearAndDestory(coins);
         ClearAndDestory(chicks);
-        HeadUi.text = "はじめる　を押してね";
+        HeadUi.text = "はじめる　を押してね 1";
         HeadUi.gameObject.SetActive(true);
-        
+
         questioner.Reset();
         answerGenerator.Reset();
-        
+
         Status.Value = GameStatus.Initialized;
     }
 
@@ -167,6 +167,7 @@ public class KanjiMananger : MonoBehaviour
         {
             Destroy(t);
         }
-        chicks.Clear();
+
+        targets.Clear();
     }
 }

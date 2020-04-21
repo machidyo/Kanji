@@ -33,8 +33,7 @@ public class AnswerDonut : MonoBehaviour
     {
         if(isBouncing) return;
         isBouncing = true;
-        // GetComponent<BoxCollider>().enabled = false;
-        GetComponent<SphereCollider>().enabled = false;
+        GetComponent<BoxCollider>().enabled = false;
 
         if (Mathf.Abs(speed) < 0.01f) speed = 0.01f; // speed が 0 だと duration のところで 0 割り算になるのでとりあえず防ぐ
         var duration = bouncingDuration / (speed * 10);
@@ -61,8 +60,7 @@ public class AnswerDonut : MonoBehaviour
             transform.DOScale(originalScale, bouncingDuration);
         }
         
-        // GetComponent<BoxCollider>().enabled = true;
-        GetComponent<SphereCollider>().enabled = true;
+        GetComponent<BoxCollider>().enabled = true;
         isBouncing = false;
     }
 }

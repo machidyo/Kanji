@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1505318195620443163}
   - component: {fileID: 6901434955780725332}
   - component: {fileID: 8257376717745305572}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 5018928229077139038}
   m_Layer: 0
   m_Name: answer_donut_white
-  m_TagString: Untagged
+  m_TagString: Answer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 159525233734058895}
   - component: {fileID: 2824704448552877630}
   - component: {fileID: 5660986609344779030}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Answer
   m_TagString: Untagged
   m_Icon: {fileID: 0}

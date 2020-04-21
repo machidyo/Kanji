@@ -87,7 +87,6 @@ public class Questioner : MonoBehaviour
 
         chickens.Add(bird);
 
-        // todo: 複数問題が出たときに答えがリフレッシュされて、最後の問題しか回答できない問題を解決する
         answerGenerator.SetAnswerDonuts(new List<Quiz> {quiz});
     }
 

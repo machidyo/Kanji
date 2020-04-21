@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -30,6 +29,7 @@ public class AnswerGenerator : MonoBehaviour
         {
             Destroy(donut);
         }
+
         answerDonuts.Clear();
 
         parameters.Clear();
@@ -46,9 +46,8 @@ public class AnswerGenerator : MonoBehaviour
 
     public void SetAnswerDonuts(List<Quiz> quizzes)
     {
-        // todo: 古い問題に回答できなくなる問題に対応する
         Reset();
-        
+
         // correct
         foreach (var quiz in quizzes)
         {
