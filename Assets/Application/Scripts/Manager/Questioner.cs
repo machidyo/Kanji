@@ -38,7 +38,7 @@ public class Questioner : MonoBehaviour
     public void StartGenerate()
     {
         Generate();
-        generator = Observable.Interval(TimeSpan.FromSeconds(10)).Subscribe(_ => Generate());
+        generator = Observable.Interval(TimeSpan.FromSeconds(3)).Subscribe(_ => Generate());
     }
 
     public void StopGenerate()
