@@ -118,7 +118,10 @@ public class KanjiManager : MonoBehaviour
                 else
                 {
                     chicks.Add(Instantiate(chick, resultGenerator.transform.position, Quaternion.identity));
-                    Score.Value--;
+                    if (Score.Value > 0)
+                    {
+                        Score.Value--;
+                    }
                 }
             })
             .AddTo(subscribers);
