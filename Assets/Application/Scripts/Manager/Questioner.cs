@@ -9,12 +9,11 @@ public class Questioner : MonoBehaviour
 {
     [SerializeField] private AnswerGenerator answerGenerator;
     [SerializeField] private GameObject chicken;
+    [SerializeField] private GameObject start;
     [SerializeField] private GameObject goal;
 
     public ReactiveDictionary<int, Result> History = new ReactiveDictionary<int, Result>();
-
-    private Vector3 start = new Vector3(6.5f, 0f, -7f);
-
+    
     private static IList<Quiz> quizzes;
 
     private IList<GameObject> chickens = new List<GameObject>();
@@ -79,7 +78,7 @@ public class Questioner : MonoBehaviour
     {
         var quiz = GetQuiz();
 
-        var bird = Instantiate(chicken, start, Quaternion.identity);
+        var bird = Instantiate(chicken, start.transform.position, Quaternion.identity);
         var qChicken = bird.GetComponent<QuestionChicken>();
         qChicken.Target = goal.transform;
         qChicken.Question.text = quiz.Kanji;
