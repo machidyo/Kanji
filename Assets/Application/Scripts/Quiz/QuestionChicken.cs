@@ -38,7 +38,7 @@ public class QuestionChicken : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.transform.name.ToLower().StartsWith("goal_doughnut"))
+        if (other.transform.tag.Equals("Goal"))
         {
             checker.Dispose();
             Eat();

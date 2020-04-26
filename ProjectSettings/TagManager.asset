@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Answer
   - Operation
+  - Goal
   layers:
   - Default
   - TransparentFX
