@@ -11,6 +11,7 @@ public class Questioner : MonoBehaviour
     [SerializeField] private GameObject chicken;
     [SerializeField] private GameObject start;
     [SerializeField] private GameObject goal;
+    [SerializeField] private GameObject particle;
 
     public ReactiveDictionary<int, Result> History = new ReactiveDictionary<int, Result>();
     
@@ -78,6 +79,7 @@ public class Questioner : MonoBehaviour
     {
         var quiz = GetQuiz();
 
+        Instantiate(particle, start.transform.position, Quaternion.Euler(Vector3.right));
         var bird = Instantiate(chicken, start.transform.position, Quaternion.identity);
         var qChicken = bird.GetComponent<QuestionChicken>();
         qChicken.Target = goal.transform;
