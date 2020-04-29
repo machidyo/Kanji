@@ -406,6 +406,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 7941523244677035313}
+  animator: {fileID: 8782555479584294607}
+  appearance: {fileID: 3046944625275527038, guid: 9eaed33828f6b42dcb01a727ac4fb57a,
+    type: 3}
+  tornado: {fileID: 8223642764816016761, guid: 1b8d1fd0984484ea3b1909608655ce44, type: 3}
   Target: {fileID: 0}
   Answer: {fileID: 1124845815349503702}
   Question: {fileID: 7063191619025697061}

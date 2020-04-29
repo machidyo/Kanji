@@ -12,7 +12,7 @@ public class Questioner : MonoBehaviour
     [SerializeField] private GameObject chicken;
     [SerializeField] private GameObject start;
     [SerializeField] private GameObject goal;
-    [SerializeField] private GameObject particle;
+
 
     public ReactiveDictionary<int, Result> History = new ReactiveDictionary<int, Result>();
     
@@ -39,7 +39,7 @@ public class Questioner : MonoBehaviour
     public void StartGenerate()
     {
         Generate();
-        generator = Observable.Interval(TimeSpan.FromSeconds(3)).Subscribe(_ => Generate());
+        generator = Observable.Interval(TimeSpan.FromSeconds(6)).Subscribe(_ => Generate());
     }
 
     public void StopGenerate()
@@ -52,7 +52,7 @@ public class Questioner : MonoBehaviour
         generator?.Dispose();
     }
 
-    public void Check(AnswerDonut answerDonut)
+    public async void Check(AnswerDonut answerDonut)
     {
         var result = new Result
         {
@@ -67,6 +67,10 @@ public class Questioner : MonoBehaviour
         if (result.IsCorrect)
         {
             var target = chickens.First(c => c.GetComponent<QuestionChicken>().Answer.text == answerDonut.Yomi);
+            target.GetComponent<QuestionChicken>().Bye();
+
+            await UniTask.Delay(1000);
+            
             chickens.Remove(target);
             Destroy(target);
             
@@ -78,10 +82,6 @@ public class Questioner : MonoBehaviour
 
     private async void Generate()
     {
-        Instantiate(particle, start.transform.position, Quaternion.Euler(90f, 0f, 90f));
-
-        await UniTask.Delay(500);
-
         var quiz = GetQuiz();
         var bird = Instantiate(chicken, start.transform.position, Quaternion.identity);
         var qChicken = bird.GetComponent<QuestionChicken>();
