@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UniRx;
+using UniRx.Async;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -75,11 +76,13 @@ public class Questioner : MonoBehaviour
         History.Add(History.Values.Count, result);
     }
 
-    private void Generate()
+    private async void Generate()
     {
-        var quiz = GetQuiz();
+        Instantiate(particle, start.transform.position, Quaternion.Euler(90f, 0f, 90f));
 
-        Instantiate(particle, start.transform.position, Quaternion.Euler(Vector3.right));
+        await UniTask.Delay(500);
+
+        var quiz = GetQuiz();
         var bird = Instantiate(chicken, start.transform.position, Quaternion.identity);
         var qChicken = bird.GetComponent<QuestionChicken>();
         qChicken.Target = goal.transform;
