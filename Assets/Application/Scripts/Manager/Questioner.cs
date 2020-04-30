@@ -68,13 +68,12 @@ public class Questioner : MonoBehaviour
         {
             var target = chickens.First(c => c.GetComponent<QuestionChicken>().Answer.text == answerDonut.Yomi);
             target.GetComponent<QuestionChicken>().Bye();
+            answerGenerator.Reset();
 
             await UniTask.Delay(1000);
             
             chickens.Remove(target);
             Destroy(target);
-            
-            answerGenerator.Reset();
         }
 
         History.Add(History.Values.Count, result);
