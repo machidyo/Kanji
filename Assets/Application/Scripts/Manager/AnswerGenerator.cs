@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UniRx.Async;
+using UnityEditor.UI;
 using UnityEngine;
 
 public class AnswerGenerator : MonoBehaviour
 {
     [SerializeField] private int maxAnswerDonut;
     [SerializeField] private List<GameObject> donuts;
+    [SerializeField] private GameObject correct;
 
     private IList<AnswerParameter> parameters = new List<AnswerParameter>();
     private IList<GameObject> answerDonuts = new List<GameObject>();
@@ -23,7 +26,7 @@ public class AnswerGenerator : MonoBehaviour
         answers = QuizzesLoader.Quizzes;
     }
 
-    public void Reset()
+    public　void Reset()
     {
         foreach (var donut in answerDonuts)
         {
@@ -51,7 +54,7 @@ public class AnswerGenerator : MonoBehaviour
         // correct
         foreach (var quiz in quizzes)
         {
-            SetAnswerDonut(quiz);
+            SetAnswerDonut(quiz, true);
         }
 
         // wrong
@@ -59,11 +62,11 @@ public class AnswerGenerator : MonoBehaviour
         for (var i = 0; i < count; i++)
         {
             var q = GetQuiz();
-            SetAnswerDonut(q);
+            SetAnswerDonut(q, false);
         }
     }
 
-    private void SetAnswerDonut(Quiz quiz)
+    private void SetAnswerDonut(Quiz quiz, bool isCorrect)
     {
         var d = GetDonutGameObject();
         var p = GetGeneratePosition();
@@ -71,6 +74,7 @@ public class AnswerGenerator : MonoBehaviour
         var donut = Instantiate(d, p, Quaternion.identity);
         var answer = donut.GetComponent<AnswerDonut>();
         answer.SetAnswerBy(quiz);
+        answer.IsCorrect = isCorrect;
         answerDonuts.Add(donut);
     }
 

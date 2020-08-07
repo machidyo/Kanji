@@ -1,10 +1,16 @@
-﻿using DG.Tweening;
+﻿using System;
+using System.Security.Cryptography;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class AnswerDonut : MonoBehaviour
 {
+    [SerializeField] private GameObject hitPuff;
+    [SerializeField] private GameObject correctExplosion;
+    
     public string Yomi => quiz.Yomi;
+    public bool IsCorrect { get; set; } = false;
 
     private Quiz quiz;
     private Text answer;
@@ -21,7 +27,22 @@ public class AnswerDonut : MonoBehaviour
         originalScale = transform.localScale;
         maxScale = originalScale * 1.2f;
     }
-    
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.transform.tag.Equals("Hand"))
+        {
+            if (IsCorrect)
+            {
+                Instantiate(correctExplosion, transform.position, Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(hitPuff, other.transform.position, Quaternion.identity);
+            }
+        }
+    }
+
     public void SetAnswerBy(Quiz q)
     {
         quiz = q;

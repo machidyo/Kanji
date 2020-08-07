@@ -300,3 +300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e321fdf4204441dca8d2a9403b626e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitPuff: {fileID: 2715427577862402403, guid: 70593034b41ff4658828fcf25b0d7544, type: 3}
+  correctExplosion: {fileID: 8844183522536350048, guid: 47c19effdb5a14de3a35eadcfb190d8c,
+    type: 3}
+  IsCorrect: 0

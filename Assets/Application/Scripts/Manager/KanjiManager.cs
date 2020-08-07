@@ -157,6 +157,7 @@ public class KanjiManager : MonoBehaviour
         ClearAndDestory(chicks);
         HeadUi.text = "はじめる　を押してね 1";
         HeadUi.gameObject.SetActive(true);
+        goal.SetActive(true);
 
         questioner.Reset();
         answerGenerator.Reset();

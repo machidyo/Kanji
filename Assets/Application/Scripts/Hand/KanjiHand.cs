@@ -1,10 +1,9 @@
 ﻿using UniRx;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class KanjiHand : MonoBehaviour
 {
-    [FormerlySerializedAs("kanjiMananger")] [SerializeField] private KanjiManager kanjiManager;
+    [SerializeField] private KanjiManager kanjiManager;
     [SerializeField] private Questioner questioner;
 
     [SerializeField] private bool isRightHand;
