@@ -153,7 +153,7 @@ public class KanjiManager : MonoBehaviour
 
     private void Reset()
     {
-        Timer.Value = 30;
+        Timer.Value = 3600;
         Score.Value = 0;
         resultGenerator.transform.position = new Vector3(9, 4, -5);
         ClearAndDestory(coins);
