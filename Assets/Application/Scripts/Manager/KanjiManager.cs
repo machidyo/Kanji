@@ -112,8 +112,10 @@ public class KanjiManager : MonoBehaviour
             {
                 if (x.Value.IsCorrect)
                 {
-                    coins.Add(Instantiate(coin, resultGenerator.transform.position, Quaternion.identity));
+                    var old = resultGenerator.transform.position;
+                    coins.Add(Instantiate(coin, old, Quaternion.identity));
                     Score.Value++;
+                    resultGenerator.transform.position = new Vector3(old.x, old.y + 1.2f, old.z);
                 }
                 else
                 {
@@ -153,6 +155,7 @@ public class KanjiManager : MonoBehaviour
     {
         Timer.Value = 30;
         Score.Value = 0;
+        resultGenerator.transform.position = new Vector3(9, 4, -5);
         ClearAndDestory(coins);
         ClearAndDestory(chicks);
         HeadUi.text = "はじめる　を押してね 1";
