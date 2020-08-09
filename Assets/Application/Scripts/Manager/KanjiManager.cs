@@ -119,7 +119,7 @@ public class KanjiManager : MonoBehaviour
                 }
                 else
                 {
-                    chicks.Add(Instantiate(chick, resultGenerator.transform.position, Quaternion.identity));
+                    // chicks.Add(Instantiate(chick, resultGenerator.transform.position, Quaternion.identity));
                     if (Score.Value > 0)
                     {
                         Score.Value--;
