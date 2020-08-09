@@ -155,7 +155,7 @@ public class KanjiManager : MonoBehaviour
     {
         Timer.Value = 3600;
         Score.Value = 0;
-        resultGenerator.transform.position = new Vector3(9, 4, -5);
+        resultGenerator.transform.position = new Vector3(7.5f, 4, -1);
         ClearAndDestory(coins);
         ClearAndDestory(chicks);
         HeadUi.text = "ふーせんをニワトリからまもれ！";
