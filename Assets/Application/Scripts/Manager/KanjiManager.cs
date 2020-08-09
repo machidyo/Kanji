@@ -21,6 +21,7 @@ public class KanjiManager : MonoBehaviour
 
     [SerializeField] private Text HeadUi;
 
+    [SerializeField] private GameObject mainUi;
     [SerializeField] private Text StatusText;
     [SerializeField] private Text TimerText;
     [SerializeField] private Text ScoreText;
@@ -76,6 +77,7 @@ public class KanjiManager : MonoBehaviour
 
     private async void CountDown()
     {
+        mainUi.SetActive(false);
         HeadUi.text = "3";
         var temp = Observable.Interval(TimeSpan.FromSeconds(1))
             .Subscribe(x => HeadUi.text = (2 - x).ToString());
@@ -160,6 +162,7 @@ public class KanjiManager : MonoBehaviour
         ClearAndDestory(chicks);
         HeadUi.text = "ふーせんをニワトリからまもれ！";
         HeadUi.gameObject.SetActive(true);
+        mainUi.SetActive(true);
         goal.SetActive(true);
 
         questioner.Reset();
