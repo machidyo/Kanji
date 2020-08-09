@@ -158,7 +158,7 @@ public class KanjiManager : MonoBehaviour
         resultGenerator.transform.position = new Vector3(9, 4, -5);
         ClearAndDestory(coins);
         ClearAndDestory(chicks);
-        HeadUi.text = "はじめる　を押してね 1";
+        HeadUi.text = "ふーせんをニワトリからまもれ！";
         HeadUi.gameObject.SetActive(true);
         goal.SetActive(true);
 
