@@ -39,7 +39,7 @@ public class AnswerGenerator : MonoBehaviour
             parameters.Add(new AnswerParameter
             {
                 Id = i,
-                GeneratePosition = new Vector3(5f, 0.5f, -4.4f + -0.2f * i),
+                GeneratePosition = new Vector3(5f, 0.3f, -4.4f + -0.2f * i),
                 IsUsing = false
             });
         }
