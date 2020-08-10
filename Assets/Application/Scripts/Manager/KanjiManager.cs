@@ -127,7 +127,8 @@ public class KanjiManager : MonoBehaviour
                     // chicks.Add(Instantiate(chick, resultGenerator.transform.position, Quaternion.identity));
                     if (Score.Value > 0)
                     {
-                        Score.Value--;
+                        // 減点廃止
+                        // Score.Value--;
                     }
                 }
             })
